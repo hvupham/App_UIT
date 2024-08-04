@@ -4,6 +4,7 @@
   "main": "expo/AppEntry.js",
   "scripts": {
     "start": "npx expo start --tunnel",
+    "dev": "nodemon --watch . --exec expo start --tunnel",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
@@ -24,7 +25,8 @@
     "typescript": "~5.3.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "nodemon": "^3.1.4"
   },
   "private": true
 }
