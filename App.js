@@ -5,7 +5,8 @@ import React from 'react';
 import HomeScreen from './src/screens/homeScreen';
 import LoginScreen from './src/screens/loginScreen';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import {NEXT_PUBLIC_BASE_URL} from '@env';
+console.log(NEXT_PUBLIC_BASE_URL)
 const Stack = createStackNavigator();
 const styles = StyleSheet.create({
   container: {
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
       </Stack.Navigator>

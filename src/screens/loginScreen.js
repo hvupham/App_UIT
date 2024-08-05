@@ -1,7 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, ActivityIndicator, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NEXT_PUBLIC_BASE_URL, API } from '@env';
 
+console.log(NEXT_PUBLIC_BASE_URL,API);
 const LoginScreen = ({ navigation }) => {
 
   const [email, setEmail] = useState('');
@@ -17,8 +20,9 @@ const LoginScreen = ({ navigation }) => {
     
     try{
       console.log('Sending request with:', { email, password });
+      console.log(NEXT_PUBLIC_BASE_URL)
       
-      const response = await axios.post(`http://192.168.56.1:3000/api/login`, {
+      const response = await axios.post(`${NEXT_PUBLIC_BASE_URL}/login`, {
         email,
         password
       })
@@ -28,6 +32,7 @@ const LoginScreen = ({ navigation }) => {
       setPassword("");
       await AsyncStorage.setItem('user', JSON.stringify(response.data.user));
       await AsyncStorage.setItem('token', response.data.token);
+      console.log(response.data.message)
       navigation.navigate('Home');
     } catch (error) {
       setLoading(false);
