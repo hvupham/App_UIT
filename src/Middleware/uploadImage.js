@@ -22,7 +22,7 @@ const UploadImage = ({urlUploadComplete}) => {
         console.log('ImagePicker Error: ', response.error);
       } else {
         const source = { uri: response.assets[0].uri };
-        setImageUri(source.uri);
+        setImageUri(response.assets[0].uri);
       }
     });
   };
@@ -34,22 +34,28 @@ const UploadImage = ({urlUploadComplete}) => {
     }
 
     const formData = new FormData();
-    formData.append('file', {
-      uri: imageUri,
-      type: 'image/jpeg',
-      name: 'upload.jpg',
-    });
-    formData.append('upload_preset', `${PUBLIC_UPLOAD_PRESET}`); // Thay 'your_upload_preset' bằng upload preset của bạn
-    console.log('upload_preset', `${PUBLIC_UPLOAD_PRESET}`);
+    formData.append('file', imageUri);
+    formData.append('upload_preset', 'uit_public'); 
+    console.log('imageUri:', imageUri);
+
+    console.log('upload_presetssssssssssss', `${PUBLIC_UPLOAD_PRESET}`);
+    console.log("ssa",PUBLIC_CLOUDINARY_API)
+  
     try {
-      const response = await axios.post(`${PUBLIC_CLOUDINARY_API}`, formData);
+
+      const res = await fetch("https://api.cloudinary.com/v1_1/drlakb5dh/image/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const response = await res.json();
+      console.log('response', response);
       console.log(PUBLIC_CLOUDINARY_API)
-      const uploadedUrl = response.data.secure_url;
-      setUploadedImageUrl(response.data.secure_url);
+      const uploadedUrl = response.secure_url;
+      setUploadedImageUrl(response.secure_url);
       Alert.alert('Success', 'Image uploaded successfully');
-      if (urlUploadComplete) {
-        urlUploadComplete(uploadedUrl);
-      }
+
+      urlUploadComplete(uploadedUrl);
+      console.log(urlUploadComplete)
     } catch (error) {
       console.error('Upload Error: ', error);
       Alert.alert('Error', 'Failed to upload image');
@@ -64,7 +70,7 @@ const UploadImage = ({urlUploadComplete}) => {
     <View>
       <Button title="Chọn ảnh" onPress={handleImagePicker} />
       {imageUri && <Image source={{ uri: imageUri }} style={{ width: 100, height: 100, marginBottom: 12 }} />}
-      <Button title="Upload" onPress={handleUpload} />
+      <Button title="Upload"  onPress={handleUpload} />
       {uploadedImageUrl && <AdvancedImage cldImg={img} />}
     </View>
   );
