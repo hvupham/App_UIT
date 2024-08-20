@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Modal, Button } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import PostForm from '../components/addPost';
-
+import Header from '../components/header';
 const InstagramHome = () => {
   const [isPostFormVisible, setIsPostFormVisible] = useState(false);
 
@@ -22,20 +22,7 @@ const InstagramHome = () => {
   };
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.headerIcons}>
-          <TouchableOpacity onPress={handleAddPost}>
-            <Ionicons name="add-circle-outline" size={24} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleHeartPress}>
-            <Ionicons name="heart-outline" size={24} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handlePaperPlanePress}>
-            <Ionicons name="paper-plane-outline" size={24} color="black" />
-          </TouchableOpacity>
-        </View>
-      </View>
+      <Header />
 
       <ScrollView>
         {/* Stories */}
@@ -85,21 +72,6 @@ const InstagramHome = () => {
           </Text>
         </View>
       </ScrollView>
-      <Modal
-        visible={isPostFormVisible}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={togglePostForm}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.closeButton} onPress={togglePostForm}>
-              <Ionicons name="close" size={24} color="black" />
-            </TouchableOpacity>
-            <PostForm onClose={togglePostForm} />
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 };
@@ -109,24 +81,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 15,
-    height: 44,
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#ccc',
-  },
+
   headerText: {
     fontSize: 20,
     fontWeight: 'bold',
   },
-  headerIcons: {
-    flexDirection: 'row',
-    width: 100,
-    justifyContent: 'space-between',
-  },
+
   stories: {
     paddingVertical: 10,
     borderBottomWidth: 0.5,
