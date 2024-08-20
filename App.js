@@ -7,6 +7,7 @@ import LoginScreen from './src/screens/loginScreen';
 import ImagePicker from './src/Middleware/test';
 import { createStackNavigator } from '@react-navigation/stack';
 import {NEXT_PUBLIC_BASE_URL} from '@env';
+
 console.log(NEXT_PUBLIC_BASE_URL)
 const Stack = createStackNavigator();
 const styles = StyleSheet.create({

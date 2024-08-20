@@ -36,10 +36,10 @@ const UploadImage = ({urlUploadComplete}) => {
     const formData = new FormData();
     formData.append('file', imageUri);
     formData.append('upload_preset', 'uit_public'); 
-    console.log('imageUri:', imageUri);
+    // console.log('imageUri:', imageUri);
 
-    console.log('upload_presetssssssssssss', `${PUBLIC_UPLOAD_PRESET}`);
-    console.log("ssa",PUBLIC_CLOUDINARY_API)
+    // console.log('upload_presetssssssssssss', `${PUBLIC_UPLOAD_PRESET}`);
+    // console.log("ssa",PUBLIC_CLOUDINARY_API)
   
     try {
 
@@ -55,7 +55,6 @@ const UploadImage = ({urlUploadComplete}) => {
       Alert.alert('Success', 'Image uploaded successfully');
 
       urlUploadComplete(uploadedUrl);
-      console.log(urlUploadComplete)
     } catch (error) {
       console.error('Upload Error: ', error);
       Alert.alert('Error', 'Failed to upload image');
@@ -71,7 +70,7 @@ const UploadImage = ({urlUploadComplete}) => {
       <Button title="Chọn ảnh" onPress={handleImagePicker} />
       {imageUri && <Image source={{ uri: imageUri }} style={{ width: 100, height: 100, marginBottom: 12 }} />}
       <Button title="Upload"  onPress={handleUpload} />
-      {uploadedImageUrl && <AdvancedImage cldImg={img} />}
+      {/* {uploadedImageUrl && <AdvancedImage cldImg={img} />} */}
     </View>
   );
 };
