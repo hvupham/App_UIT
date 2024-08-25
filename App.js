@@ -9,6 +9,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {NEXT_PUBLIC_BASE_URL} from '@env';
 
 console.log(NEXT_PUBLIC_BASE_URL)
+console.log(process.env.NEXT_PUBLIC_BASE_URL)
+
 const Stack = createStackNavigator();
 const styles = StyleSheet.create({
   container: {

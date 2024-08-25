@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { View, Button, Image, Alert } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
-import axios from 'axios';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { auto } from '@cloudinary/url-gen/actions/resize';
 import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
-import { AdvancedImage } from '@cloudinary/react';
 import {PUBLIC_UPLOAD_PRESET, PUBLIC_CLOUDINARY_API} from '@env';
 const UploadImage = ({urlUploadComplete}) => {
   const [imageUri, setImageUri] = useState(null);
@@ -36,11 +34,7 @@ const UploadImage = ({urlUploadComplete}) => {
     const formData = new FormData();
     formData.append('file', imageUri);
     formData.append('upload_preset', 'uit_public'); 
-    // console.log('imageUri:', imageUri);
 
-    // console.log('upload_presetssssssssssss', `${PUBLIC_UPLOAD_PRESET}`);
-    // console.log("ssa",PUBLIC_CLOUDINARY_API)
-  
     try {
 
       const res = await fetch("https://api.cloudinary.com/v1_1/drlakb5dh/image/upload", {

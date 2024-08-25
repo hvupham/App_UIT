@@ -21,6 +21,8 @@ const LoginScreen = ({ navigation }) => {
     try{
       console.log('Sending request with:', { email, password });
       console.log(NEXT_PUBLIC_BASE_URL)
+      console.log(process.env.NEXT_PUBLIC_BASE_URL)
+
       
       const response = await axios.post(`${NEXT_PUBLIC_BASE_URL}/login`, {
         email,
