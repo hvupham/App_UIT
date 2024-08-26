@@ -71,5 +71,9 @@ const styles = StyleSheet.create({
     width: 100,
     justifyContent: 'space-between',
     },
+    closeButton:{
+        marginBottom: 30,
+        marginLeft: 30
+    }
 })
 export default Header;

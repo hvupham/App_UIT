@@ -4,7 +4,6 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react';
 import HomeScreen from './src/screens/homeScreen';
 import LoginScreen from './src/screens/loginScreen';
-import ImagePicker from './src/Middleware/test';
 import { createStackNavigator } from '@react-navigation/stack';
 import {NEXT_PUBLIC_BASE_URL} from '@env';
 
@@ -26,7 +25,6 @@ export default function App() {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="test" component={ImagePicker} />
 
       </Stack.Navigator>
     </NavigationContainer>

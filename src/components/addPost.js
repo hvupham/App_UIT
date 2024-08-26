@@ -11,11 +11,11 @@ const PostForm = () => {
     setimage(uri);
   };
   const handleSubmit = async () => {
-    if (caption.trim() === '' || image.trim() === '') {
-      Alert.alert('Lỗi', 'Vui lòng điền đầy đủ tiêu đề và nội dung');
-      console.log('Lỗi:', { caption, image });
-      return;
-    }
+    // if (caption.trim() === '' || image.trim() === '') {
+    //   Alert.alert('Lỗi', 'Vui lòng điền đầy đủ tiêu đề và nội dung');
+    //   console.log('Lỗi:', { caption, image });
+    //   return;
+    // }
 
     try {
       const user = await AsyncStorage.getItem('user');
