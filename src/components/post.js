@@ -2,9 +2,28 @@ import React, {useState, useEffect} from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Modal, Button } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {NEXT_PUBLIC_BASE_URL} from '@env';
-
+import Story from './story';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Post = () => {
   const [posts, setPosts] = useState([]);
+  const [user, setUser] = useState(null);
+  // lấy dữ liệu user từ AsyncStorage
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const user = await AsyncStorage.getItem('user');
+        if (user !== null) {
+          const userJson = JSON.parse(user);
+          setUser(userJson._id);
+          console.log(userJson);
+        }
+      } catch (error) {
+        console.error('Lỗi khi lấy dữ liệu người dùng:', error);
+      }
+    };
+
+    fetchUser();
+  }, []);
   useEffect(() => {
     const fetchPosts = async () => {
         try {
@@ -20,36 +39,33 @@ const Post = () => {
             console.error('Lỗi khi lấy dữ liệu:', error);
         }
     };
-
     fetchPosts();
-    console.log(process.env.NEXT_PUBLIC_BASE_URL)
-    posts.map((post, index) =>{
-      console.log("1",post.user)
-    })
+  }, 
+  []);
+  const handleLike = async(postId)=>{
+    try {
+      const response = await fetch(`${NEXT_PUBLIC_BASE_URL}/post/like`,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({user,postId})
+      });
+      const data = await response.json();
+      console.log(data)
+      console.log({user,postId})
 
-}, []);
+    } catch (err){
+      console.log({message: err})
+    }
+    
 
+  }
     console.log(posts, "Dữ liệu bài viết");
-
-
     return (
         <ScrollView>
-        {/* Stories */}
-          <ScrollView horizontal style={styles.stories}>
-            {[1, 2, 3, 4, 5].map((item) => (
-              <View key={item} style={styles.storyItem}>
-                <View style={styles.storyRing}>
-                  <Image
-                    source={{ uri: `https://randomuser.me/api/portraits/men/${item}.jpg` }}
-                    style={styles.storyImage}
-                  />
-                </View>
-                <Text style={styles.storyText}>User {item}</Text>
-              </View>
-            ))}
-          </ScrollView>
-        
-
+        <Story/>
+      
         {/* Post */}
         <ScrollView>
         {posts.map((post, index) => (
@@ -59,14 +75,14 @@ const Post = () => {
                 source={{ uri: post.userAvatar || 'https://randomuser.me/api/portraits/women/1.jpg' }}
                 style={styles.postAvatar}
               />
-              <Text style={styles.postUsername}>{post.username || 'username'}</Text>
+              <Text style={styles.postUsername}>{post.user.username || 'username'}</Text>
             </View>
             <Image
               source={{ uri: post.image || 'https://picsum.photos/500/500' }}
               style={styles.postImage}
             />
             <View style={styles.postActions}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => handleLike(post._id)}>
                 <Ionicons name="heart-outline" size={24} color="black" />
               </TouchableOpacity>
               <TouchableOpacity>
@@ -76,9 +92,9 @@ const Post = () => {
                 <Ionicons name="paper-plane-outline" size={24} color="black" />
               </TouchableOpacity>
             </View>
-            <Text style={styles.postLikes}>{post.likes.length || '1,234'} likes</Text>
+            <Text style={styles.postLikes}>{post.likes?.length??  '100'} likes</Text>
             <Text style={styles.postCaption}>
-              <Text style={styles.postUsername}>{post.username || 'username'} </Text>
+              <Text style={styles.postUsername}>{post.user.username || 'username'} </Text>
               {post.caption || 'This is a sample caption for the Instagram post.'}
             </Text>
           </View>
@@ -92,34 +108,6 @@ const styles = StyleSheet.create({
     headerText: {
         fontSize: 20,
         fontWeight: 'bold',
-      },
-    
-      stories: {
-        paddingVertical: 10,
-        borderBottomWidth: 0.5,
-        borderBottomColor: '#ccc',
-      },
-      storyItem: {
-        alignItems: 'center',
-        marginHorizontal: 8,
-      },
-      storyRing: {
-        width: 68,
-        height: 68,
-        borderRadius: 34,
-        borderWidth: 2,
-        borderColor: '#e1306c',
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-      storyImage: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-      },
-      storyText: {
-        fontSize: 12,
-        marginTop: 4,
       },
       post: {
         marginBottom: 15,
