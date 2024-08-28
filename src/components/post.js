@@ -53,7 +53,21 @@ const Post = () => {
       });
       const data = await response.json();
       console.log(data)
-      console.log({user,postId})
+      // console.log({user,postId})
+      // setPosts((prevPosts) =>
+      // Cập nhật số lượng like và trạng thái đã like
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post._id === postId
+            ? {
+                ...post,
+                likes: post.likes.includes(user)
+                  ? post.likes.filter((like) => like !== user) // Bỏ "like" nếu đã "like" trước đó
+                  : [...post.likes, user], // Thêm "like" nếu chưa "like"
+              }
+            : post
+        )
+      );
 
     } catch (err){
       console.log({message: err})
@@ -65,7 +79,6 @@ const Post = () => {
     return (
         <ScrollView>
         <Story/>
-      
         {/* Post */}
         <ScrollView>
         {posts.map((post, index) => (
@@ -83,7 +96,11 @@ const Post = () => {
             />
             <View style={styles.postActions}>
               <TouchableOpacity onPress={() => handleLike(post._id)}>
-                <Ionicons name="heart-outline" size={24} color="black" />
+                <Ionicons 
+                  name={post.likes.includes(user) ? "heart" : "heart-outline"}
+                  size={24}
+                  color={post.likes.includes(user) ? "red" : "black"}
+                 />
               </TouchableOpacity>
               <TouchableOpacity>
                 <Ionicons name="chatbubble-outline" size={24} color="black" />
