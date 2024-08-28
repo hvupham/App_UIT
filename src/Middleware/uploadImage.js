@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Button, Image, Alert } from 'react-native';
+import { View, Button, Image, Alert, Platform } from 'react-native';
 // import { launchImageLibrary } from 'react-native-image-picker';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { auto } from '@cloudinary/url-gen/actions/resize';
@@ -27,9 +27,26 @@ const UploadImage = ({urlUploadComplete}) => {
       Alert.alert('Error', 'Please select an image first');
       return;
     }
-    const base64 = await FileSystem.readAsStringAsync(imageUri, {
+    // const base64 = await FileSystem.readAsStringAsync(imageUri, {
+    //   encoding: FileSystem.EncodingType.Base64,
+    // });
+    let base64;
+  if (Platform.OS === 'web') {
+    // Đọc tệp hình ảnh dưới dạng base64 trên nền tảng web
+    const response = await fetch(imageUri);
+    const blob = await response.blob();
+    base64 = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  } else {
+    // Đọc tệp hình ảnh dưới dạng base64 trên các nền tảng khác
+    base64 = await FileSystem.readAsStringAsync(imageUri, {
       encoding: FileSystem.EncodingType.Base64,
     });
+  }
     const formData = new FormData();
     formData.append('file', `data:image/jpeg;base64,${base64}`);
     formData.append('upload_preset', 'uit_public'); 

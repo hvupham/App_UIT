@@ -1,25 +1,45 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import Header from '../components/header';
 import BottomTabNavigator from '../components/bottomTab';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const ProfileScreen = () => {
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+        const fetchUser = async () => {
+          try {
+            const user = await AsyncStorage.getItem('user');
+            if (user !== null) {
+              const userJson = JSON.parse(user);
+              setUser(userJson);
+              console.log(userJson.username);
+            }
+          } catch (error) {
+            console.error('Lỗi khi lấy dữ liệu người dùng:', error);
+          }
+        };
+    
+        fetchUser();
+      }, []);
+
   return (
     // <View>
     //     <Header></Header>
     // </View>
     <ScrollView style={styles.container}>
+        <Header></Header>
         <BottomTabNavigator></BottomTabNavigator>
         
         <View style={styles.header}>
             <Image
-            source={{ uri: 'https://via.placeholder.com/100' }}
+            source={{ uri: 'https://phongreviews.com/wp-content/uploads/2022/11/avatar-facebook-mac-dinh-19.jpg' }}
             style={styles.profileImage}
             />
             <View style={styles.headerInfo}>
-            <Text style={styles.username}>username</Text>
+            <Text style={styles.username}>{ user?.name ||"user "}</Text>
             <View style={styles.statsContainer}>
                 <View style={styles.statItem}>
-                <Text style={styles.statNumber}>100</Text>
+                <Text style={styles.statNumber}>{user?.posts?.length?? 100}</Text>
                 <Text style={styles.statLabel}>Bài viết</Text>
                 </View>
                 <View style={styles.statItem}>

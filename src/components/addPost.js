@@ -3,10 +3,13 @@ import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import UploadImage from '../Middleware/uploadImage';
 import {NEXT_PUBLIC_BASE_URL} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 const PostForm = () => {
   const [caption, setcaption] = useState('');
   const [image, setimage] = useState('');
+  const navigation = useNavigation();
+
   const handleImagePicked = async (uri) => {
     setimage(uri);
   };
@@ -33,7 +36,8 @@ const PostForm = () => {
 
       if (response.ok) {
         Alert.alert('Thành công', 'Bài viết đã được đăng');
-        console.log('Thành công:', response);
+        // console.log('Thành công:', response);
+        navigation.navigate('Home')
       } else {
         Alert.alert('Lỗi', 'Đăng bài thất bại');
         console.log('Lỗi:', response);
