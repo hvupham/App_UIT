@@ -1,30 +1,28 @@
-import { StatusBar } from 'expo-status-bar'
 import { NavigationContainer } from '@react-navigation/native';
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react';
-import HomeScreen from './src/screens/homeScreen';
-import LoginScreen from './src/screens/loginScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import {NEXT_PUBLIC_BASE_URL} from '@env';
+import HomeScreen from './src/screens/homeScreen';
+import LoginScreen from './src/screens/loginScreen';
+import AppLoading from './src/screens/appLoading';
+import ProfileScreen from './src/screens/profileScreen';
 
 console.log(NEXT_PUBLIC_BASE_URL)
 console.log(process.env.NEXT_PUBLIC_BASE_URL)
 
 const Stack = createStackNavigator();
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+// initialRouteName="Login"
+
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Navigator > 
+        <Stack.Screen name="Aploading" component={AppLoading} options={{ headerShown: false }} />
+        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+
 
       </Stack.Navigator>
     </NavigationContainer>

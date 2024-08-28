@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Modal, Button } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import PostForm from '../components/addPost';
 import Header from '../components/header';
 import Post from '../components/post';
-const InstagramHome = () => {
+import BottomTabNavigator from '../components/bottomTab';
+const HomeScreen = () => {
   const [isPostFormVisible, setIsPostFormVisible] = useState(false);
 
   const togglePostForm = () => {
@@ -25,6 +24,7 @@ const InstagramHome = () => {
     <View style={styles.container}>
       <Header />
       <Post/>
+      <BottomTabNavigator />
     </View>
   );
 };
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
   
 });
 
-export default InstagramHome;
+export default HomeScreen;
