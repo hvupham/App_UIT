@@ -24,7 +24,19 @@ const BottomTabNavigator = () => {
 
 const styles = StyleSheet.create({
     bottom: {
-        position: 'fixed',
+        // position: 'fixed',
+        // bottom: 0,
+        // left: 0,
+        // right: 0,
+        // height: 60,
+        // backgroundColor: '#fff',
+        // flexDirection: 'row',
+        // justifyContent: 'space-around',
+        // alignItems: 'center',
+        // borderTopWidth: 1,
+        // borderTopColor: '#ccc',
+        // flex: 1,
+        position: 'fixed', // Thay đổi từ 'fixed' sang 'absolute'
         bottom: 0,
         left: 0,
         right: 0,
@@ -35,7 +47,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderTopWidth: 1,
         borderTopColor: '#ccc',
-        flex: 1,
       },
 
 })
