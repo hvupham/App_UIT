@@ -7,7 +7,6 @@ import LoginScreen from './src/screens/loginScreen';
 import AppLoading from './src/screens/appLoading';
 import ProfileScreen from './src/screens/profileScreen';
 import { StyleSheet } from 'react-native';
-
 console.log(NEXT_PUBLIC_BASE_URL)
 console.log(process.env.NEXT_PUBLIC_BASE_URL)
 
@@ -23,6 +22,7 @@ export default function App() {
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
